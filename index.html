@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Psychic Game</title>
+</head>
+
+<body>
+
+    <div id="headPsychic">
+        <h2>Guess what letter I'm thinking of...</h2>
+        <p>Wins:<span id="wins"></span></p>
+        <p>Losses:<span id="losses"></span>
+        </p>
+        <p>Guesses Left:<span id="guessLeft"></span></p>
+        <p>Your guesses so far:<span id="guess-sofar"></span></p>
+    </div>
+
+    <script>
+        var letters = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 
+        'x', 'y', 'z'];
+
+        // Track wins, losses and ties.
+        var wins = 0;
+        var losses = 0;
+        var guesses = 11;
+        var computerGuess = letters[Math.floor(Math.random() * letters.length)];
+        var userGuessSoFar = [];
+        var winPoints = document.getElementById("wins");
+        var guessesLeft = document.getElementById("guessLeft");
+        var losePoints = document.getElementById("losses");
+        var guessSoFar = document.getElementById("guess-sofar");
+
+        function psychicGame() {
+            winPoints.textContent = wins;
+            guessesLeft.textContent = guesses;
+            losePoints.textContent = losses;
+        }
+
+        document.onkeyup = function (event) {
+
+            var userGuess = event.key;
+            userGuessSoFar.push(userGuess);
+            guessSoFar.textContent = userGuessSoFar;
+
+            if (userGuess == computerGuess) {
+
+                wins++;
+                guesses = 11
+                userGuessSoFar = [];
+                computerGuess = letters[Math.floor(Math.random() * letters.length)];
+
+            } else {
+
+                guesses--;
+
+                if (guesses == 0) {
+                    losses++;
+                    userGuessSoFar = [];
+                    guesses = 11;
+                }
+
+            }
+
+            psychicGame();
+
+        }
+
+
+        psychicGame();
+    </script>
+</body>
+
+</html>
